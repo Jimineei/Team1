@@ -47,6 +47,8 @@ public class MemberVO {
 	private String member_state; // 근무 , 휴직 , 퇴사 , 거래처  
 	private String approval_status; // 회원가입 미승인 , 승인.
 	
-	
+	private String approval_status_value; // join했을때
+	private String member_state_value;
+	private String employee_rank_value;
 	
 }
