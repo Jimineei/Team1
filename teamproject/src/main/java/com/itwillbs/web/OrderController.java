@@ -81,5 +81,19 @@ public class OrderController {
     	return "/order-list";
     }
     
+    @PostMapping(value = "/updateOrder03")
+    public String updateOrder03(OrdersVO ordersVO) {
+    	orderService.updateOrder03(ordersVO);
+    	
+    	return "/order-list";
+    }
+    
+    @PostMapping(value = "/updateOrder02")
+    public String updateOrder02(OrdersVO ordersVO) {
+    	orderService.updateOrder02(ordersVO);
+    	
+    	return "/order-list";
+    }
+    
     
 }
