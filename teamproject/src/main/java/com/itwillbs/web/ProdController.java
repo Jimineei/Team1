@@ -57,7 +57,7 @@ public class ProdController {
 	
 	// 제품등록 - 정보처리
 	@RequestMapping(value = "/insert",method = RequestMethod.POST)
-	public void insertProdPost(ProdVO vo,HttpServletRequest req) {
+	public void insertProdPost(ProdVO vo, HttpServletRequest req) {
 		logger.debug(" ( •̀ ω •́ )✧ /prod/insert -> insertProdPost() 실행 ");
 		// 한글 인코딩 처리
 		// 	--> web.xml filter 처리
@@ -112,6 +112,16 @@ public class ProdController {
 		logger.debug("( •̀ ω •́ )✧ ProdController : updateProdPost(ProdVO vo) 실행 ");
 		logger.debug("( •̀ ω •́ )✧ ProdController : vo "+vo);
 		pService.updateProd(vo, req);
+		return "/prod/list";
+	}
+	
+	
+	// 제품 삭제
+	@PostMapping(value = "/delete")
+	public String deleteProdPost(ProdVO vo, HttpServletRequest req) {
+		logger.debug("( •̀ ω •́ )✧ ProdController : deleteProdPost(ProdVO vo, HttpServletRequest req) 실행 ");
+		logger.debug("( •̀ ω •́ )✧ ProdController : vo "+vo);
+		pService.deleteProd(vo, req);
 		return "/prod/list";
 	}
 

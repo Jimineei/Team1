@@ -11,14 +11,20 @@ public interface ProdService {
 	// 제품등록
 	public void insertProd(ProdVO vo, HttpServletRequest req);
 	
+	
 	// 제품목록
 	public List<ProdVO> listProd();
+	
 	
 	// 제품조회
 	public ProdVO findProd(ProdVO vo);
 	public List<ProdVO> findProdList(ProdVO vo);
 	
+	
 	// 제품수정
 	public void updateProd(ProdVO vo, HttpServletRequest req);
 	
+	
+	// 제품삭제
+	public void deleteProd(ProdVO vo, HttpServletRequest req);
 }

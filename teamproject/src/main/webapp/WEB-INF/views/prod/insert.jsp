@@ -147,13 +147,13 @@
 											</div>
 										</div>
 										<div style="display: flex; justify-content: center; margin-bottom: 20px; gap: 20px;">
-											<button type="submit" class="btn btn-primary" id="alert_demo_3_3">
+											<button type="submit" class="btn btn-primary">
 												<span class="btn-label">
 													<i class="fa fa-plus"> 제품 등록</i>
 												</span>
 											</button>
 											<!-- 리셋버튼추가 -->
-											<button type="button" class="btn btn-warning" id="alert_demo_7">
+											<button type="button" class="btn btn-warning" id="inputReset">
 												<span class="btn-label">
 													<i class="fa fa-exclamation-circle"> 입력 초기화</i>
 												</span>
@@ -296,8 +296,8 @@
 	                    	text: "제품 등록에 실패했습니다.",
 	                    	icon: "error"
 	                    });
-	                	$('#prod_reguser').val(data.prod_reguser);
-	                	$('#prod_upduser').val(data.prod_upduser);
+	                	$('#prod_reguser').val("테스터1");
+	                	$('#prod_upduser').val("테스터1");
 	                },
 	                complete: function() {
 	                    // 요청이 완료되면 버튼 활성화
@@ -307,7 +307,7 @@
 	        });
 	        
 	        
-	        $("#alert_demo_7").click(function (e) {
+	        $("#inputReset").click(function (e) {
 	            swal({
 	                title: "입력값을 초기화하시겠습니까?",
 	                text: "입력값이 모두 지워집니다!",

@@ -14,10 +14,8 @@ import javax.inject.Inject;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.hamcrest.core.SubstringMatcher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -94,9 +92,18 @@ public class ProdServiceImpl implements ProdService {
 	}
 	
 	
+	// 제품삭제
+	@Override
+	public void deleteProd(ProdVO vo, HttpServletRequest req) {
+		logger.debug("( •̀ ω •́ )✧ Service : deleteProd(ProdVO vo, HttpServletRequest req) 실행 ");
+		pdao.deleteProd(vo);
+	}
+	
 	
 	// ***** 메서드 목록 *****
 	
+
+
 
 	// 제품식별코드 생성
 	public void genProdID(ProdVO vo) {
@@ -137,7 +144,7 @@ public class ProdServiceImpl implements ProdService {
 		if(!file.isEmpty()) {
 			logger.debug("( •̀ ω •́ )✧ imageUpload(ProdVO vo, HttpServletRequest req) 실행 : 이미지가 변경됨 ");
 			
-			if(!vo.getProd_image().isEmpty()) {
+			if(vo.getProd_image() != null) {
 				try { // 이미지 수정시 파일삭제
 		            // VO에서 파일 경로 가져오기
 		            String curFilePath = vo.getProd_image().replaceFirst("/uploads", "");

@@ -55,6 +55,14 @@
 </update>
 
 
+<!-- 제품 삭제 -->
+<update id="deleteProd">
+	update prod 
+	 set prod_status = '02' 
+	  where prod_id = #{prod_id}
+</update>
+
+
 
 
 
