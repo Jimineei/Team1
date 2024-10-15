@@ -249,6 +249,7 @@
 	                };
 
 	                reader.readAsDataURL(file); // 파일을 Data URL로 읽기
+	                
 	            } else {
 	                // 파일 선택이 취소된 경우
 	                $('#uploadfile').val(''); // 입력값 초기화

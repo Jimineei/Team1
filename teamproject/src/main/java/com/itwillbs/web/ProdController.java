@@ -2,13 +2,16 @@ package com.itwillbs.web;
 //@RequestMapping(value = "/member/*")
 //	--> 특정 동작의 형태를 구분 (*.me, *.bo, *.do)
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -82,21 +85,24 @@ public class ProdController {
 		List<ProdVO> plistVO = pService.listProd();
 		logger.debug(" ( •̀ ω •́ )✧ plistVO : "+plistVO);
 		
-		// 서비스에서 가져온 데이터를 연결된 뷰페이지에 전달해서 출력
 		model.addAttribute("plistVO",plistVO);
-		// model.addAttribute(listVO); --> memberVOList으로 이름 적용
-		
-		logger.debug(" ( •̀ ω •́ )✧ 연결된 뷰페이지로 이동 /views/prod/list.jsp ");
-		
+		// 서비스에서 가져온 데이터를 연결된 뷰페이지에 전달해서 출력
 	}
 	
 	
 	// 제품 조회
 	@PostMapping(value = "/find")
 	@ResponseBody
-	public ProdVO findProdPost(@RequestBody ProdVO vo) {
-		logger.debug("( •̀ ω •́ )✧ ProdController : findProdPost(@RequestBody ProdVO vo) 실행 ");
-		return pService.findProd(vo);
+	public ResponseEntity<Map<String, Object>> findProdPost(@RequestBody ProdVO vo) {
+	    logger.debug("( •̀ ω •́ )✧ ProdController : findProdPost(@RequestBody ProdVO vo) 실행 ");
+	    List<ProdVO> stockListVO = pService.findProdList(vo);
+	    ProdVO prodVO = pService.findProd(vo);
+	    logger.debug("( •̀ ω •́ )✧ ProdController : prodVO : "+prodVO);
+	    Map<String, Object> response = new HashMap<>();
+	    response.put("stockListVO", stockListVO);
+	    response.put("prodVO", prodVO);
+	    
+	    return ResponseEntity.ok(response);
 	}
 	
 	
@@ -104,7 +110,8 @@ public class ProdController {
 	@PostMapping(value = "/update")
 	public String updateProdPost(ProdVO vo, HttpServletRequest req) {
 		logger.debug("( •̀ ω •́ )✧ ProdController : updateProdPost(ProdVO vo) 실행 ");
-		pService.updateProd(vo);
+		logger.debug("( •̀ ω •́ )✧ ProdController : vo "+vo);
+		pService.updateProd(vo, req);
 		return "/prod/list";
 	}
 

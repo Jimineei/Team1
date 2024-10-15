@@ -16,8 +16,9 @@ public interface ProdService {
 	
 	// 제품조회
 	public ProdVO findProd(ProdVO vo);
+	public List<ProdVO> findProdList(ProdVO vo);
 	
 	// 제품수정
-	public void updateProd(ProdVO vo);
+	public void updateProd(ProdVO vo, HttpServletRequest req);
 	
 }
