@@ -126,12 +126,25 @@ public class ProdController {
 	}
 
 	
-	// 재고 이동
+	// 재고 이동(get)
 	@GetMapping(value = "/transfer")
 	public void transferProdGet(ProdVO vo, HttpServletRequest req) {
 		logger.debug("( •̀ ω •́ )✧ ProdController : transferProdGet(ProdVO vo, HttpServletRequest req) 실행 ");
 		
 	}
+	
+	// 재고 이동(post)
+	@PostMapping(value = "/transferSelect")
+	@ResponseBody
+	public ResponseEntity<List<ProdVO>> transferSelectPost() {
+	    logger.debug("( •̀ ω •́ )✧ ProdController : findProdPost() 실행 ");
+	    List<ProdVO> transferListVO = pService.transferSelect();
+	    logger.debug("( •̀ ω •́ )✧ ProdController : stockListVO : " + transferListVO);
+	    
+	    return ResponseEntity.ok(transferListVO);
+	}
+	
+	
 	
 	
 }

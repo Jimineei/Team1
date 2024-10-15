@@ -96,6 +96,14 @@ public class ProdDAOImpl implements ProdDAO {
 	}
 
 
+	// 재고이동
+	@Override
+	public List<ProdVO> transferSelect() {
+		logger.debug("( •̀ ω •́ )✧ DAO : transferSelect(ProdVO vo) 실행");
+		return sqlSession.selectList(NAMESPACE + ".transferSelect");
+	}
+
+
 	
 	
 	

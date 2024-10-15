@@ -63,6 +63,15 @@
 </update>
 
 
+<!-- 재고 이동 -->
+<select id="transferSelect" resultType="ProdVO">
+	select p.prod_id, p.prod_name, s.wh_number, s.prod_qty 
+	 from prod p
+	  left join stock s on p.prod_id = s.prod_id 
+	   where p.prod_status != '02';
+</select>
+
+
 
 
 

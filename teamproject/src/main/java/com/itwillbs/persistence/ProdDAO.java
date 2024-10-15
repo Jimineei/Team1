@@ -33,6 +33,10 @@ public interface ProdDAO {
 	// 제품삭제
 	public void deleteProd(ProdVO vo);
 	
+	
+	// 재고이동
+	public List<ProdVO> transferSelect();
+	
 
 	
 }

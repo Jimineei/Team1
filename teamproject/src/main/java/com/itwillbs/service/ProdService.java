@@ -27,4 +27,8 @@ public interface ProdService {
 	
 	// 제품삭제
 	public void deleteProd(ProdVO vo, HttpServletRequest req);
+	
+	
+	// 재고이동
+	public List<ProdVO> transferSelect();
 }

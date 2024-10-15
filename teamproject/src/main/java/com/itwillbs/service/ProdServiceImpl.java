@@ -100,9 +100,21 @@ public class ProdServiceImpl implements ProdService {
 	}
 	
 	
+	// 재고이동
+	@Override
+	public List<ProdVO> transferSelect() {
+		logger.debug("( •̀ ω •́ )✧ Service : transferSelect() 실행 ");
+		return pdao.transferSelect();
+	}
+	
+	
+	
+	
+	
+	
+	
 	// ***** 메서드 목록 *****
 	
-
 
 
 	// 제품식별코드 생성
@@ -144,7 +156,7 @@ public class ProdServiceImpl implements ProdService {
 		if(!file.isEmpty()) {
 			logger.debug("( •̀ ω •́ )✧ imageUpload(ProdVO vo, HttpServletRequest req) 실행 : 이미지가 변경됨 ");
 			
-			if(vo.getProd_image() != null) {
+			if(!vo.getProd_image().isEmpty()) {
 				try { // 이미지 수정시 파일삭제
 		            // VO에서 파일 경로 가져오기
 		            String curFilePath = vo.getProd_image().replaceFirst("/uploads", "");
@@ -193,6 +205,24 @@ public class ProdServiceImpl implements ProdService {
 			}
 		} else {
 			logger.debug("( •̀ ω •́ )✧ imageUpload(ProdVO vo, HttpServletRequest req) 실행 : 이미지가 변경되지 않음 ");
+			if(vo.getProd_image().isEmpty()) {
+				try { // 이미지 수정시 파일삭제
+		            // VO에서 파일 경로 가져오기
+		            String curFilePath = vo.getTemp_image().replaceFirst("/uploads", "");
+		            logger.debug("( •̀ ω •́ )✧ 절대경로 생성 curFilePath : "+curFilePath);
+		            // 상대 경로와 현재 작업 디렉토리를 결합하여 절대 경로 생성
+		            Path path = Paths.get(uploadDir, curFilePath);
+		            logger.debug("( •̀ ω •́ )✧ 절대경로 생성 path : "+path);
+		            
+		            // 파일 삭제
+		            Files.delete(path);
+		            logger.debug("( •̀ ω •́ )✧ 파일 삭제 성공");
+		        } catch (NoSuchFileException e) {
+		        	logger.debug("( •̀ ω •́ )✧ 파일이 없습니다");
+		        } catch (IOException e) {
+		        	logger.debug("( •̀ ω •́ )✧ 파일 삭제중 오류발생");
+		        }
+			}
 		}
 	}
 	// 이미지 업로드
