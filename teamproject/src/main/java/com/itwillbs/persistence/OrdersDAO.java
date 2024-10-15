@@ -15,5 +15,9 @@ public interface OrdersDAO {
 	
 	void updateOrder(/* Map<String, Object> data, */ OrdersVO ordersVO);
 	
-	public Integer deleteOrder(OrdersVO ordersVO);
+	void deleteOrder(OrdersVO ordersVO);
+	
+	void updateOrder03(OrdersVO ordersVO);
+	
+	void updateOrder02(OrdersVO ordersVO);
 }

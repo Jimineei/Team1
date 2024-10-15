@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
 <html lang="kr">
@@ -855,8 +856,13 @@ pageEncoding="UTF-8"%>
 
 <div class="form-group">
 	<div>
-		<label for="ord_supervisor_id">발주 담당자</label>
+		<label for="ord_manager_id">발주 담당자</label>
 		<input type="text" name="ord_manager_id" required="required" >
+		<%-- <select id="ord_manager_id" name="ord_manager_id">
+			<c:forEach var="member" items="${member }">
+				<option value="${member.member_id }">${member.member_id }</option>
+			</c:forEach>
+		</select> --%>
 	</div>
 </div>
 
@@ -869,28 +875,28 @@ pageEncoding="UTF-8"%>
 
 <div class="form-group">
 	<div>
-		<label for="ord_supervisor_id">제품 식별 코드</label>
+		<label for="prod_id">제품 식별 코드</label>
 		<input type="text" name="prod_id" required="required">
 	</div>
 </div>
 
 <div class="form-group">
 	<div>
-		<label for="ord_supervisor_id">발주 금액</label>
+		<label for="ord_price">발주 금액</label>
 		<input type="text" name="ord_price" required="required">
 	</div>
 </div>
 
 <div class="form-group">
 	<div>
-		<label for="ord_supervisor_id">발주 수량</label>
+		<label for="ord_quantity">발주 수량</label>
 		<input type="text" name="ord_quantity" required="required">
 	</div>
 </div>
 
 <div class="form-group">
 	<div>
-		<label for="ord_supervisor_id">거래처 코드</label>
+		<label for="company_code">거래처 코드</label>
 		<input type="text" name="company_code" required="required">
 	</div>
 </div>
@@ -904,7 +910,7 @@ pageEncoding="UTF-8"%>
 
 <div class="form-group">
 	<div>
-		<label for="ord_supervisor_id">입고 예정 창고</label>
+		<label for="wh_number">입고 예정 창고</label>
 		<input type="text" name="wh_number" required="required">
 	</div>
 </div>
