@@ -64,6 +64,18 @@
 	#prodUpdateForm input {
     	font-size: 18px !important;
 	}
+	
+	.modal-footer i {
+		font-size: 18px;
+		line-height: 2;
+	}
+	
+	.modal-footer button {
+		font-size: 18px;
+		line-height: 2;
+		margin-bottom: 10px;
+		font-weight: bold;
+	}
     
 </style>
 
@@ -331,12 +343,14 @@
 										accept=".jpeg, .jpg, .png, .gif" />
                                   </div>
                                 </div>
-                                <div class="col-md-4">
-                                  <div class="preview">
-									<img id="previewimg" alt="미리보기이미지" src=""/>
-								  </div>
+								<div class="col-md-4" style="display: flex; align-items: center;">
+									<div class="preview">
+										<img id="previewimg" alt="미리보기이미지" src="#"/>
+									</div>
+										<button class="btn btn-black btn-border btn-sm" id="image_delete">이미지제거</button>
 								</div>
 								<input type="hidden" id="prod_image" name="prod_image">
+								<input type="hidden" id="temp_image" name="temp_image">
                               </div>
                          	</form>
                          	<div class="card-body">
@@ -508,7 +522,9 @@
                $("#prod_remarks").val(data.prodVO.prod_remarks);
                prodImage = data.prodVO.prod_image;
 			   $("#previewimg").attr("src", prodImage);
-			   $("#prod_image").val(data.prodVO.prod_image);
+			   $("#previewimg").show();
+			   $("#prod_image").val(prodImage);
+			   $("#temp_image").val(prodImage);
 			   
                // 재고 리스트 표시
                const stockListBody = $("#stockListBody");
@@ -573,6 +589,11 @@
 	        });
      	// 이미지 업로드 미리보기
     	
+     	$("#image_delete").click(function(e) {
+     		e.preventDefault();
+     		$("#prod_image").val('');
+     		$("#previewimg").hide();
+     	});
     	
     	
     	// 제품정보 수정사항 제출

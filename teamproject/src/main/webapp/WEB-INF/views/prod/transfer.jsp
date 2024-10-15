@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>재고이동</title>
 
 <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
 	name="viewport" />
@@ -30,7 +30,15 @@
 </script>
 
 <style>
-        
+	.btn-warning {
+		color: #fff !important;
+	} 
+	
+	#transferForm i {
+		font-size: 18px;
+		line-height: 2;
+	}
+
 </style>
 
 <!-- CSS Files -->
@@ -75,45 +83,20 @@
 									<form id="transferForm" action="" method="post">
 										<div class="form-group d-flex" style="margin: 0 200px; gap: 100px;">
 											<div style="flex: 1;">
-												<label for="prod_name" class="col-form-label-lg">제품명</label>
-												<input type="text" class="form-control input-full"
-													id="prod_name" name="prod_name" placeholder="제품명" required="required"/>
-											</div>
-											<div style="flex: 1;">
-												<label for="prod_category" class="col-form-label-lg">제품카테고리</label>
-												<input type="text" class="form-control input-full"
-													id="prod_category" name="prod_category" placeholder="제품카테고리" required="required"/>
-											</div>
+												<label for="prod_id" class="col-form-label-lg">제품식별코드</label>
+												<select class="form-select" id="prod_id" name="prod_id">
+													<option>제품식별코드</option>
+													<!-- 제품식별코드를 고른후 다음 셀렉트버튼 누르면 그 제품식별코드를 받아서 다시 데이터베이스조회 
+													제품식별코드에 해당하는 창고를 받아오고 창고를 고른후 다음 셀렉트 버튼을 누르면 제품식별코드와 창고를 
+													받아서 다시 데이터베이스 조회를 하여 제품식별코드와 창고에 해당하는 제품 수량을 받아온다 -->
+												</select>
 												<input type="hidden" id="prod_reguser" name="prod_reguser" 
 													value="테스터1" placeholder="등록작업자" />
 												<input type="hidden" id="prod_upduser" name="prod_upduser" 
 													value="테스터1" placeholder="수정작업자" />
-										</div>
-										<div class="form-group d-flex" style="margin: 0 200px; gap: 100px;">
-											<div style="flex: 1;">
-												<label for="prod_brand" class="col-form-label-lg">제품브랜드</label>
-												<input type="text" class="form-control input-full"
-													id="prod_brand" name="prod_brand" placeholder="제품브랜드" required="required"/>
 											</div>
-											<div style="flex: 1;">
-												<label for="company_code" class="col-form-label-lg">입고처</label>
-												<input type="text" class="form-control input-full"
-													id="company_code" name="company_code" placeholder="입고처" required="required" />
-											</div>
-										</div>
-										<div class="form-group d-flex" style="margin: 0 200px; gap: 100px;">
-											<div style="flex: 1;">
-												<label for="prod_remarks" class="col-form-label-lg">비고</label>
-												<textarea id="prod_remarks" name="prod_remarks" rows="4" cols="30" class="form-control"></textarea>
-											</div>
-											<div style="flex: 1;">
-												<label for="uploadfile" class="col-form-label-lg">제품이미지</label>
-												<input type="file" class="form-control input-full"
-													id="uploadfile" name="uploadfile" accept=".jpeg, .jpg, .png, .gif" />
-											</div>
-											<div class="preview">
-												<img id="previewimg" alt="미리보기이미지" src="#"/>
-											</div>
+											<div style="flex: 1;"></div>
+											<div style="flex: 1;"></div>
 										</div>
 										<div style="display: flex; justify-content: center; margin-bottom: 20px; gap: 20px;">
 											<button type="submit" class="btn btn-primary">
@@ -183,48 +166,37 @@
 	
 	<script type="text/javascript">
     
-	    $(document).ready(function () {
+	$(document).ready(function () {
 	    	
-
-	        $('#uploadfile').on('change', function(event) {
-	            const file = event.target.files[0]; // 선택된 파일
-	            if (file) {
-	                // MIME 타입 확인
-	                const ImageTypes = [
-	                    'image/jpeg',  // JPEG
-	                    'image/png',   // PNG
-	                    'image/gif',   // GIF
-	                    //'image/bmp',   // BMP
-	                    //'image/tiff',  // TIFF
-	                    //'image/webp',  // WEBP
-	                    //'image/svg+xml', // SVG
-	                    //'image/heif',  // HEIF
-	                    //'image/heic'   // HEIC
-	                ]; // 허용하는 이미지 타입
-
-	                if (!ImageTypes.includes(file.type)) {
-	                    swal("오류!", "이미지 파일만 업로드 가능합니다.", "error");
-	                    $('#uploadfile').val(''); // 입력값 초기화 (업로드 자체를 막음)
-	                    $('#previewimg').hide(); // 미리보기 숨김
-	                    return; // 함수 종료
-	                }
-
-	                const reader = new FileReader(); // FileReader 객체 생성
-
-	                // 파일이 로드되면 미리보기 이미지 src를 설정
-	                reader.onload = function(e) {
-	                	$('#previewimg').attr('src', e.target.result); // jQuery로 src 설정
-	                    $('#previewimg').css('display', 'inline-block'); // 미리보기 보여줌
-	                };
-
-	                reader.readAsDataURL(file); // 파일을 Data URL로 읽기
-	                
-	            } else {
-	                // 파일 선택이 취소된 경우
-	                $('#uploadfile').val(''); // 입력값 초기화
-	                $('#previewimg').hide(); // 미리보기 숨김
-	            }
-	        });
+	// select 요소 클릭 시 데이터 가져오기
+	$('#prod_id').on('click', function() {
+		if ($(this).find('option').length > 1) {
+			return; // 첫 번째 옵션만 있을 때만 요청
+		}
+		$.ajax({
+			url: '/prod/transferSelect', // 서버의 URL (데이터를 가져오는 엔드포인트)
+			type: 'POST', // POST 방식으로 요청
+			contentType: 'application/json', // JSON 형식으로 전송
+			data: JSON.stringify({}), // 빈 객체를 JSON 문자열로 전송
+			dataType: 'json',
+			success: function(data) {
+				var select = $('#prod_id');
+				select.empty();
+				select.append('<option value="">제품식별코드 선택</option>');
+				$.each(data, function(index, p) {
+					select.append('<option value="' + p.prod_id + '">' + p.prod_id + ' - ' + p.prod_name + '</option>');
+				});
+			},
+			error: function(xhr, status, error) {
+				console.error("데이터를 가져오는 데 오류가 발생했습니다:", error);
+			}
+		});
+	});
+	// select 요소 클릭 시 데이터 가져오기
+	    	
+	    	
+	    	
+	    	
 	    	
 	    	
 	        $('#prodForm').on('submit', function (e) {
@@ -251,12 +223,6 @@
 	                    		text: "확인",
 	                    	}
 	                    });
-	                    $('input').val('');
-	                    $('#uploadfile').val('');
-	                    $('#prod_remarks').val('');
-	                    $('#previewimg').hide();
-	                    $('#prod_reguser').val("테스터1");
-	                	$('#prod_upduser').val("테스터1");
 	                },
 	                error: function (error) {
 	                    // 오류 시 SweetAlert 모달 표시
@@ -295,10 +261,6 @@
 	            }).then(function(clear) { // [confirm --> true / cancel --> false] - clear 값으로 전달
 	                if (clear) {
 	                    // 입력 필드 비우기 로직
-	                    $('input').val('');
-	                    $('#uploadfile').val('');
-	                    $('#prod_remarks').val('');
-	                    $('#previewimg').hide();
 
 	                    swal({
 	                        title: "초기화되었습니다.",

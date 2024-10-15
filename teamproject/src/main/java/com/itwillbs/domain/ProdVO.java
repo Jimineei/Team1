@@ -30,6 +30,7 @@ public class ProdVO {
 	private int current_qty;
 	private int prod_stock;
 	private String prod_image;
+	private String temp_image;
 	private MultipartFile uploadfile;
 	private String company_code;
 	private int wh_number;
