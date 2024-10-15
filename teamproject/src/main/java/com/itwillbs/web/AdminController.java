@@ -1,6 +1,8 @@
 package com.itwillbs.web;
 
 import javax.inject.Inject;
+
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -23,6 +25,8 @@ public class AdminController {
 
 	@Inject
 	private MemberService mService;
+	
+	Map<String, String> response = new HashMap<>();;
 
 	@RequestMapping(value = "adminMemberList", method = RequestMethod.GET)
 	public void adminMemberListGET(Model model) {
@@ -33,11 +37,41 @@ public class AdminController {
 		model.addAttribute("memberList", memberList);
 	}
 
-	@RequestMapping(value = "getMemberInfo", method = RequestMethod.POST)
+	@RequestMapping(value = "/getMemberInfo", method = RequestMethod.POST)
 	public ResponseEntity<Map<String, Object>> memberDetails(@RequestBody MemberVO vo) {
 		 Map<String, Object> memberInfo = mService.memberInfo(vo.getMember_id());
 
 		 // 결과를 ResponseEntity로 반환
 		 return ResponseEntity.ok(memberInfo);
+	}
+	
+	@RequestMapping(value = "/updateMember" , method =RequestMethod.POST )
+	public ResponseEntity<Map<String, String>> updateMember(@RequestBody MemberVO vo) {
+		response.clear();
+		logger.debug("updateMember : " + vo.getMember_id());
+		int result = mService.memberUpdate(vo);
+		
+		logger.debug("성공 했을때. result : " +result);
+		if(result == 0) {
+			response.put("message", "오류");
+			return ResponseEntity.ok(response); 
+		}
+		response.put("message", "수정");
+		return ResponseEntity.ok(response); 
+	}
+	@RequestMapping(value = "/deleteMember" , method =RequestMethod.POST )
+	public ResponseEntity<Map<String, String>> deleteMember(@RequestBody MemberVO vo) {
+		response.clear();
+		
+		logger.debug("updateMember : " + vo.getMember_id());
+		int result = mService.memberDelete(vo);
+		
+		logger.debug("성공 했을때. result : " +result);
+		if(result == 0) {
+			response.put("message", "오류");
+			return ResponseEntity.ok(response); 
+		}
+		response.put("message", "삭제");
+		return ResponseEntity.ok(response); 
 	}
 }

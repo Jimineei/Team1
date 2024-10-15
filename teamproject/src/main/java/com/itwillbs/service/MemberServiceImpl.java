@@ -92,7 +92,7 @@ public class MemberServiceImpl implements MemberService{
 	
 	@Override
 	public List<MemberVO> memberList() {
-		logger.debug("memberList() 실행 ");
+		logger.debug("memberList() 실행 ");	
 		
 		return mdao.getMemberList();
 	}
