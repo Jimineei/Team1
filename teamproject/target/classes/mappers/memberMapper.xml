@@ -11,11 +11,9 @@
 	<!-- 회원가입 -->
 	<!-- userid 컬럼명. -->
 	<insert id="insertMember">
-		insert into member (member_id,member_pw,member_name,member_email,member_tel,
-		member_birth,department_id,employee_rank,create_date,update_date,
-		permission_id, member_state,approval_status )
-		values(#{member_id},#{member_pw},#{member_name},#{member_email},#{member_tel},null,
-		null,'01', now(),now(),'01','01','01');
+		insert into member 
+		(member_id,member_pw,member_name,member_email,member_tel,member_birth,department_id,employee_rank,create_date,update_date,permission_id, member_state,approval_status )
+		values(#{member_id},#{member_pw},#{member_name},#{member_email},#{member_tel},null,1,'01', now(),now(),'01','01','01');
 	</insert>
 
 	<!-- 로그인 체크 -->
@@ -47,85 +45,70 @@
 	</select>
 
 	<!-- 회원정보 수정 -->
-	<!-- <update id="updateMember" > update tbl_member set useremail = #{useremail} 
-		, updatedate = now(), username= #{username} where userid=#{userid} and userpw=#{userpw} 
-		</update> -->
+	<update id="updateMember">
+	    update member
+	    set update_date = now(),
+	        department_id = #{department_id},
+	        member_state = #{member_state},
+	        employee_rank = #{employee_rank}
+	    where member_id = #{member_id}
+	</update>
 
 	<!-- 회원정보 삭제 -->
-	<!-- <delete id="deleteMember"> delete from tbl_member where userid=#{userid} 
-		and userpw=#{userpw} </delete> -->
+	 <update id="deleteMember">update member set member_state = #{member_state} where member_id=#{member_id} </update> 
 
-	<!-- 회원정보 목록(list) -->
+	<!-- 회원정보 전체 목록(list) -->
 	<select id="getMemberList" resultType="MemberVO">
-		SELECT
-		m.member_id,
-		m.member_pw,
-		m.member_name,
-		m.member_email,
-		m.member_tel,
-		m.member_birth,
-		m.department_id,
-		m.employee_rank,
-		m.create_date,
-		m.update_date,
-		m.permission_id,
-		m.approval_status,
-		c1.common_status AS approval_status_value,
-		c2.common_status AS member_state_value,
-		c3.common_status AS employee_rank_value
-		FROM
-		member m
-		LEFT JOIN
-		common c1 ON m.approval_status = c1.common_value AND c1.common_work =
-		'approval_status'
-		LEFT JOIN
-		common c2 ON m.member_state = c2.common_value AND c2.common_work =
-		'member_state'
-		LEFT JOIN
-		common c3 ON m.employee_rank = c3.common_value AND c3.common_work =
-		'emp_rank'
+		
+    SELECT
+        m.member_id,
+        m.member_pw,
+        m.member_name,
+        m.member_email,
+        m.member_tel,
+        m.member_birth,
+        m.department_id,
+        m.employee_rank,
+        m.create_date,
+        m.update_date,
+        m.permission_id,
+        m.member_state,
+        m.approval_status,
+        c3.common_status AS employee_rank_value
+    FROM
+        member m
+    LEFT JOIN
+        common c3 ON m.employee_rank = c3.common_value AND c3.common_work = 'emp_rank'
+    WHERE
+        m.member_state != (
+            SELECT common_value 
+            FROM common 
+            WHERE common_status = '퇴사' AND common_work = 'member_state'
+        )
 	</select>
 	
+	<!-- 특정 회원정보 -->
 	<select id="getMemberById" resultType="MemberVO">
 	SELECT
-		m.member_id,
-		m.member_pw,
-		m.member_name,
-		m.member_email,
-		m.member_tel,
-		m.member_birth,
-		m.department_id,
-		m.employee_rank,
-		m.create_date,
-		m.update_date,
-		m.permission_id,
-		m.approval_status,
-		c1.common_status AS approval_status_value,
-		c2.common_status AS member_state_value,
-		c3.common_status AS employee_rank_value
+		*
 		FROM
-		member m
-		LEFT JOIN
-		common c1 ON m.approval_status = c1.common_value AND c1.common_work =
-		'approval_status'
-		LEFT JOIN
-		common c2 ON m.member_state = c2.common_value AND c2.common_work =
-		'member_state'
-		LEFT JOIN
-		common c3 ON m.employee_rank = c3.common_value AND c3.common_work =
-		'emp_rank'
-		WHERE m.member_id = #{member_id}
-	
+		member
+		WHERE member_id = #{member_id}
 	</select>
 
-	<select id="getEmp_rank" resultType="String">
-		SELECT common_status FROM common WHERE common_work = "emp_rank"
+	<select id="getEmp_rank" resultType="map">
+		SELECT common_value, common_status  FROM common WHERE common_work = "emp_rank"
 	</select>
-	<select id="getApproval" resultType="String">
-		SELECT common_status FROM common WHERE common_work = 'approval_status'
+	<select id="getApproval" resultType="map">
+		SELECT common_value, common_status FROM common WHERE common_work = 'approval_status'
 	</select>
-	<select id="getMemberState" resultType="String">
-		SELECT common_status FROM common WHERE common_work = 'member_state'
+	
+	<select id="getDepartment"  resultType="map">
+		SELECT department_id, department_name FROM departments
+	</select>
+	
+	<select id="getMemberState" resultType="map">
+		SELECT common_value, common_status FROM common WHERE common_work = 'member_state'
 	</select>
 
 

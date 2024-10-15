@@ -74,6 +74,7 @@ public class SignupController {
 	
 	@RequestMapping(value ="/checkUserId" , method=RequestMethod.POST)
 	public ResponseEntity<Map<String, String>> memberIdcheck(@RequestBody MemberVO vo) {
+		response.clear();
 		
 		
 		logger.info("memberId 중복검사 : "+vo.getMember_id() );

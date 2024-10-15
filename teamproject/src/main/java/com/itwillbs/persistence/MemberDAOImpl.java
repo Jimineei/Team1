@@ -160,15 +160,19 @@ public class MemberDAOImpl implements MemberDAO{
 		System.out.println(" DAO : getMemberDetails : " + member_id);
 		MemberVO member =  sqlSession.selectOne(NAMESPACE+".getMemberById",member_id);
 		Map<String, Object> commonStatuses = new HashMap<>();
-		List<String> result1 = sqlSession.selectList(NAMESPACE+".getEmp_rank");
-		List<String> result2 = sqlSession.selectList(NAMESPACE+".getApproval");
-		List<String> result3 = sqlSession.selectList(NAMESPACE+".getMemberState");
+		Map<String, Object> resultEmpMap = sqlSession.selectMap(NAMESPACE + ".getEmp_rank", "common_value");
+		Map<String, Object> resultMemberStateMap = sqlSession.selectMap(NAMESPACE+".getMemberState" , "common_value");
+		Map<String, Object> resultDeptMap = sqlSession.selectMap(NAMESPACE + ".getDepartment", "department_id");
+		
+		//List<String> result4 = sqlSession.selectList(NAMESPACE+".getApproval");
 
 		// 결과를 map에 추가
 		commonStatuses.put("member", member);
-		commonStatuses.put("empRank", result1); // 키와 값을 추가합니다.
-		commonStatuses.put("approval", result2);
-		commonStatuses.put("memberState", result3);
+		commonStatuses.put("empRank", resultEmpMap); // 키와 값을 추가합니다.
+		commonStatuses.put("memberState", resultMemberStateMap);
+		commonStatuses.put("department", resultDeptMap);
+		
+//		commonStatuses.put("approval", result4);
 
 
 		return commonStatuses;

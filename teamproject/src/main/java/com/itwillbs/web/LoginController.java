@@ -51,7 +51,7 @@ public class LoginController {
 	    session.setAttribute("isFirstVisit", false);
 	    session.setAttribute("id", result.getMember_id());
 		session.setAttribute("name", result.getMember_name());
-		session.setAttribute("member_Status", result.getMember_state());
+		session.setAttribute("permission_id", result.getPermission_id());
 	}
 	
 	
