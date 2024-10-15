@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import com.itwillbs.domain.MemberVO;
-import com.itwillbs.web.SignupController;
+
 
 /**
  * 
@@ -38,7 +38,6 @@ public class MemberDAOImpl implements MemberDAO{
 	
 	// Mapper namespace 정보 저장
 	private static final String NAMESPACE = "com.itwillbs.mapper.MemberMapper";
-	private static final Logger logger = LoggerFactory.getLogger(MemberDAOImpl.class);
 	
 	@Override
 	public String insertMember(MemberVO vo) {
@@ -146,11 +145,35 @@ public class MemberDAOImpl implements MemberDAO{
 		return sqlSession.update(NAMESPACE+".deleteMember", dvo);
 	}
 	
+	// admin 회원 전체 조회.
 	@Override
 	public List<MemberVO> getMemberList() {
 		System.out.println(" DAO : getMemberList() ");	
-		
+
+		// 합쳐진 List결과를 리턴
 		return sqlSession.selectList(NAMESPACE+".getMemberList");
 	}
+	
+	// admin 특정 회원 조회
+	@Override
+	public Map<String, Object>  getMemberDetails(String member_id) {
+		System.out.println(" DAO : getMemberDetails : " + member_id);
+		MemberVO member =  sqlSession.selectOne(NAMESPACE+".getMemberById",member_id);
+		Map<String, Object> commonStatuses = new HashMap<>();
+		List<String> result1 = sqlSession.selectList(NAMESPACE+".getEmp_rank");
+		List<String> result2 = sqlSession.selectList(NAMESPACE+".getApproval");
+		List<String> result3 = sqlSession.selectList(NAMESPACE+".getMemberState");
+
+		// 결과를 map에 추가
+		commonStatuses.put("member", member);
+		commonStatuses.put("empRank", result1); // 키와 값을 추가합니다.
+		commonStatuses.put("approval", result2);
+		commonStatuses.put("memberState", result3);
+
+
+		return commonStatuses;
+	}
+	
+	
 	
 }
