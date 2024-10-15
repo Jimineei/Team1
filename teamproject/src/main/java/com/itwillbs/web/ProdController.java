@@ -126,6 +126,12 @@ public class ProdController {
 	}
 
 	
+	// 재고 이동
+	@GetMapping(value = "/transfer")
+	public void transferProdGet(ProdVO vo, HttpServletRequest req) {
+		logger.debug("( •̀ ω •́ )✧ ProdController : transferProdGet(ProdVO vo, HttpServletRequest req) 실행 ");
+		
+	}
 	
 	
 }
