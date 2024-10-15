@@ -360,11 +360,18 @@
                               id="prodUpdate"
                               class="btn btn-primary"
                             >
-                              수정하기
+                              <i class="fa fa-pen"> 제품 수정</i>
                             </button>
                             <button
                               type="button"
+                              id="prodDelete"
                               class="btn btn-danger"
+                            >
+                             <i class="fa fa-trash"> 제품 삭제</i>
+                            </button>
+                            <button
+                              type="button"
+                              class="btn btn-black"
                               data-bs-dismiss="modal"
                             >
                               닫기
@@ -616,8 +623,72 @@
         });
      	// 제품정보 수정사항 제출
         
+     	
+     	// 제품정보 삭제
+		$("#prodDelete").click(function() {
+			var prod_id = $("#prod_id").val();
+			
+		swal({
+			title: "제품을 삭제하시겠습니까?",
+			text: "등록된 제품이 삭제됩니다!",
+			icon: "warning",
+			buttons: {
+				confirm: {
+					text: "네, 삭제하겠습니다.",
+					className: "btn btn-danger",
+				},
+				cancel: {
+					visible: true,
+					text: "취소",
+					className: "btn btn-black",
+				},
+			},
+		}).then(function(confirm) {
+			if (confirm) {
+				$.ajax({
+					url: "/prod/delete",
+					type: "POST",
+					data: {
+						prod_id: prod_id
+					},
+					success: function(response) {
+						swal({
+							title: "삭제되었습니다.",
+							text: "등록된 제품이 삭제되었습니다.",
+							buttons: {
+								confirm: {
+									className: "btn btn-primary",
+								}
+							}
+						}).then(function(){
+							location.reload();
+						});
+					},
+					error: function(xhr, status, error) {
+						swal({
+							title: "오류 발생",
+							text: "제품 삭제에 실패했습니다.",
+							icon: "error",
+							buttons: {
+								confirm: {
+									className: "btn btn-black",
+								}
+							}
+						}).then(function(){
+							location.reload();
+						});
+					}
+				});
+			} else {
+				swal.close();
+			}
+		});
+	});
+    // 제품정보 삭제
      
-     
+    
+    
+    
       });//jquery DOM 준비
     </script>
   
