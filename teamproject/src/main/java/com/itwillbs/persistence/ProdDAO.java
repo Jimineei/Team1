@@ -20,14 +20,14 @@ public interface ProdDAO {
 	// 제품목록
 	public List<ProdVO> listProd();
 	
+	
 	// 제품조회
 	public ProdVO findProd(ProdVO vo);
+	public List<ProdVO> findProdList(ProdVO vo);
+	
 	
 	// 제품수정
 	public void updateProd(ProdVO vo);
 
-	
-	// 제품수정(창고!=,수량!=)
-	public void insertUpdateProd(ProdVO vo);
 	
 }

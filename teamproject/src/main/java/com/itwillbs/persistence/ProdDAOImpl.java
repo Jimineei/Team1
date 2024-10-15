@@ -75,6 +75,12 @@ public class ProdDAOImpl implements ProdDAO {
 		return sqlSession.selectOne(NAMESPACE + ".findProd", vo);
 	}
 
+	@Override
+	public List<ProdVO> findProdList(ProdVO vo) {
+		logger.debug("( •̀ ω •́ )✧ DAO : findProdList(ProdVO vo) 실행");
+		return sqlSession.selectList(NAMESPACE + ".findProdList", vo);
+	}
+
 
 	// 제품수정 메서드
 	@Override
@@ -83,13 +89,6 @@ public class ProdDAOImpl implements ProdDAO {
 		sqlSession.update(NAMESPACE + ".updateProd", vo);
 	}
 
-	
-	// 제품수정 (창고!=,수량!=)
-	@Override
-	public void insertUpdateProd(ProdVO vo) {
-		logger.debug("( •̀ ω •́ )✧ DAO : insertUpdateProd(ProdVO vo) 실행");
-		sqlSession.insert(NAMESPACE + ".insertUpdateProd", vo);
-	}
 
 	
 	
