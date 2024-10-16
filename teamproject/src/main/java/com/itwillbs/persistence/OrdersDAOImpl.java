@@ -61,4 +61,6 @@ public class OrdersDAOImpl implements OrdersDAO{
 		sqlSession.update(NAMESPACE+".updateOrder02", ordersVO);
 	}
 	
+	
+	
 }

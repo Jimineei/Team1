@@ -3,6 +3,7 @@ package com.itwillbs.persistence;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -20,4 +21,6 @@ public interface OrdersDAO {
 	void updateOrder03(OrdersVO ordersVO);
 	
 	void updateOrder02(OrdersVO ordersVO);
+	
+	
 }

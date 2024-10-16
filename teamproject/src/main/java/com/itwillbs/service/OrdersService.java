@@ -23,4 +23,6 @@ public interface OrdersService {
 	public void updateOrder03(OrdersVO ordersVO);
 	
 	public void updateOrder02(OrdersVO ordersVO);
+	
+	
 }

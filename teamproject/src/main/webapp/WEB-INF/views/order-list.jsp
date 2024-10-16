@@ -886,12 +886,14 @@ pageEncoding="UTF-8"%>
           <div class="page-inner">
 
 <main>
- <h2>요청 받기 성공!</h2>
- 
  <div class="container">
  	<div class="table-responsive">
         <h1>발주 목록</h1>
-        <table class="table">
+        <div id="multi-filter-select_filter" class="dataTables_filter">
+        
+        	
+        </div>
+        <table class="display table table-striped table-hover dataTable">
             <thead>
                 <tr>
                     <th>순번</th>
@@ -905,9 +907,9 @@ pageEncoding="UTF-8"%>
                     <th>발주 일자</th>
                     <th>발주 수정 일자</th>
                     <th>거래처 코드</th>
-                    <th>비고</th>
+                    <!-- <th>비고</th> -->
                     <th>입고 예정 창고</th>
-                    <th>삭제 상태</th>
+                    <!-- <th>삭제 상태</th> -->
                 </tr>
              </thead>
              <tbody>
@@ -927,9 +929,9 @@ pageEncoding="UTF-8"%>
                         <td>${o.ord_date}</td>
                         <td>${o.ord_date_change}</td>
                         <td>${o.company_code}</td>
-                        <td>${o.ord_text}</td>
+                        <%-- <td>${o.ord_text}</td> --%>
                         <td>${o.wh_number}</td>
-                        <td>${o.ord_delete_status }</td>
+                        <%-- <td>${o.ord_delete_status }</td> --%>
                         
                     </tr>
 				  
@@ -978,11 +980,11 @@ pageEncoding="UTF-8"%>
 		            <label>거래처 코드:</label>
 		            <input type="text" id="modalCompanyCode" name="company_code" /><br>
 		            <label>비고:</label>
-		            <input type="text" id="modalOrdText" name="ord_text" /><br>
+		            <textarea class="form-control" id="modalOrdText" name="ord_text"></textarea><br>
 		            <label>입고 예정 창고:</label>
 		            <input type="text" id="modalWhNumber" name="wh_number" /><br>
-		            <label>삭제 상태:</label>
-		            <input type="text" id="modalOrdDeleteStatus" name="ord_delete_status" /><br>
+		            <!-- <label>삭제 상태:</label> -->
+		            <input type="hidden" id="modalOrdDeleteStatus" name="ord_delete_status" /><br>
 	            </form>
 	            
 	            <div id="buttonContainer"></div>
@@ -993,6 +995,8 @@ pageEncoding="UTF-8"%>
     
 
 <script>
+	
+	
     function openModal(ord_count, ord_number, ord_status, ord_manager_id, ord_supervisor_id, prod_id, ord_price, ord_quantity, ord_date, ord_date_change, company_code, ord_text, wh_number, ord_delete_status) {
         document.getElementById('modalOrdCount').value = ord_count;
         document.getElementById('modalOrdNumber').value = ord_number;
@@ -1022,15 +1026,15 @@ pageEncoding="UTF-8"%>
 
         if (ord_status === '01') {
             buttonContainer.innerHTML += '<button type="button" disabled="disabled" class="container-disable">요청</button>';
-            buttonContainer.innerHTML += '<button id="updateBtn">수정</button>';
-            buttonContainer.innerHTML += '<button id="deleteBtn">삭제</button>';
+            buttonContainer.innerHTML += '<button id="updateBtn" class="btn btn-success">수정</button>';
+            buttonContainer.innerHTML += '<button id="deleteBtn" class="btn btn-danger">삭제</button>';
             buttonContainer.innerHTML += '<button type="button" disabled="disabled" class="container-disable">요청(관리자)</button>';
-            buttonContainer.innerHTML += '<button id="updateBtn03">발주 처리</button>';
-            buttonContainer.innerHTML += '<button id="updateBtn02">발주 반려</button>';
+            buttonContainer.innerHTML += '<button id="updateBtn03" class="btn btn-success">발주 처리</button>';
+            buttonContainer.innerHTML += '<button id="updateBtn02" class="btn btn-danger">발주 반려</button>';
         } else if (ord_status === '02') {
             buttonContainer.innerHTML += '<button type="button" disabled="disabled" class="container-disable">반려</button>';
-            buttonContainer.innerHTML += '<button id="updateBtn01">재요청</button>';
-            buttonContainer.innerHTML += '<button id="deleteBtn01">삭제</button>';
+            buttonContainer.innerHTML += '<button id="updateBtn01" class="btn btn-success">재요청</button>';
+            buttonContainer.innerHTML += '<button id="deleteBtn01" class="btn btn-danger">삭제</button>';
         } else if (ord_status === '03') {
             buttonContainer.innerHTML += '<button type="button" disabled="disabled" class="container-disable">결재</button>';
         } else if (ord_status === '04') {
