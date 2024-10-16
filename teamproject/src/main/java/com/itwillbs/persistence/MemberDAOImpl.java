@@ -1,6 +1,7 @@
 package com.itwillbs.persistence;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -79,7 +80,7 @@ public class MemberDAOImpl implements MemberDAO{
 		
 		return resultVO;
 	}
-	
+	// 안씀	
 	@Override
 	public MemberVO loginMember(String userid, String userpw) {
 		System.out.println(" DAO : loginMember(String userid, String userpw) 실행");
@@ -104,7 +105,8 @@ public class MemberDAOImpl implements MemberDAO{
 		System.out.println(" DAO : "+resultVO);
 		
 		return resultVO;
-	}
+	}	// 안씀
+	// 안씀
 	
 	@Override
 	public MemberVO getMember(String member_id) {
@@ -147,19 +149,37 @@ public class MemberDAOImpl implements MemberDAO{
 	
 	// admin 회원 전체 조회.
 	@Override
-	public List<MemberVO> getMemberList() {
+	public List<MemberVO> getMemberList(String action) {
 		System.out.println(" DAO : getMemberList() ");	
-
-		// 합쳐진 List결과를 리턴
+		if(action.equals("WaitingList")) {
+			// 합쳐진 List결과를 리턴
+			List resultWaitingMember = sqlSession.selectList(NAMESPACE+".getWaitingMember");
+			List resultEmpMap = sqlSession.selectList(NAMESPACE + ".getEmp_rank", "common_value");
+			List resultDeptMap = sqlSession.selectList(NAMESPACE + ".getDepartment", "department_id");
+			
+			List resultList = new ArrayList();
+			resultList.add(resultWaitingMember);
+			resultList.add(resultEmpMap);
+			resultList.add(resultDeptMap);
+			
+			
+			return resultList;
+		}
+		
 		return sqlSession.selectList(NAMESPACE+".getMemberList");
+		
+		
+		
 	}
 	
 	// admin 특정 회원 조회
 	@Override
 	public Map<String, Object>  getMemberDetails(String member_id) {
+		// 왜 map으로 사용하는지? . List로 쓰면 위의 getMemberList에도 사용할 수 있음.
 		System.out.println(" DAO : getMemberDetails : " + member_id);
-		MemberVO member =  sqlSession.selectOne(NAMESPACE+".getMemberById",member_id);
 		Map<String, Object> commonStatuses = new HashMap<>();
+		
+		MemberVO member =  sqlSession.selectOne(NAMESPACE+".getMemberById",member_id);
 		Map<String, Object> resultEmpMap = sqlSession.selectMap(NAMESPACE + ".getEmp_rank", "common_value");
 		Map<String, Object> resultMemberStateMap = sqlSession.selectMap(NAMESPACE+".getMemberState" , "common_value");
 		Map<String, Object> resultDeptMap = sqlSession.selectMap(NAMESPACE + ".getDepartment", "department_id");
@@ -177,6 +197,8 @@ public class MemberDAOImpl implements MemberDAO{
 
 		return commonStatuses;
 	}
+	
+	
 	
 	
 	

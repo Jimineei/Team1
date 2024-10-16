@@ -42,8 +42,7 @@ public interface MemberDAO {
 	// 사용자 정보삭제
 	public Integer deleteMember(MemberVO dvo);
 	
-	// 사용자 정보 목록 조회
-	public List<MemberVO> getMemberList();
+	
 	
 	// 사용자 전화번호 조회 (중복 체크)
 	public MemberVO getMemberTel(String tel);
@@ -51,5 +50,9 @@ public interface MemberDAO {
 	// admin(전용) 사용자 정보 조회
 	public Map<String, Object> getMemberDetails(String member_id);
 	
+	// admin(전용) 사용자 정보 목록 조회
+	public List<MemberVO> getMemberList(String action);
+	
+
 	
 }

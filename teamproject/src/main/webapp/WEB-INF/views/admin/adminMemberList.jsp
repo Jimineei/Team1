@@ -68,10 +68,12 @@ uri="http://java.sun.com/jsp/jstl/core"%>
     <link rel="stylesheet" href="/resources/css/adminMemberList.css" />
   </head>
   <body>
-	<c:if test="${sessionScope.id == null || sessionScope.permission_id != '03'}">
-  		<c:redirect url="/index" />
-  	</c:if> 
-  	
+    <c:if
+      test="${sessionScope.id == null || sessionScope.permission_id != '03'}"
+    >
+      <c:redirect url="/index" />
+    </c:if>
+
     <div class="wrapper">
       <!-- Header -->
       <jsp:include page="/resources/inc/header.jsp" />
@@ -85,7 +87,6 @@ uri="http://java.sun.com/jsp/jstl/core"%>
           <div class="page-header">
             <h3 class="fw-bold mb-3">회원목록</h3>
             <ul class="breadcrumbs mb-3">
-            
               <li class="nav-home">
                 <a href="#"> <i class="icon-home"></i> </a>
               </li>
@@ -97,7 +98,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
                 <div class="card-header">
                   <div class="card-title">회원목록</div>
                 </div>
-				
+
                 <div class="card-body d-flex flex-column">
                   <div class="row">
                     <div class="col-md-12">
@@ -221,7 +222,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
                   <select id="memberRank"></select>
                 </p>
                 <p>
-                  <strong>부서번호 : </strong>
+                  <strong>부서 : </strong>
                   <select id="memberDepartment"></select>
                 </p>
                 <p>
@@ -304,7 +305,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
       function memberInfoDetails(data) {
         event.preventDefault();
         $.ajax({
-          url: "/getMemberInfo",
+          url: "/admin/getMemberInfo",
           type: "POST",
           data: JSON.stringify({ member_id: data }),
           contentType: "application/json",
@@ -323,16 +324,6 @@ uri="http://java.sun.com/jsp/jstl/core"%>
             GlobalDept = response.member.department_id;
             GlobalStatus = response.member.member_state;
             // 기존 내용 삭제
-            $("#memberRank").empty();
-            $.each(response.empRank, function (key, value) {
-              var selected =
-                response.member.employee_rank == value.common_value
-                  ? "selected"
-                  : ""; // 조건에 따라 selected 설정
-              $("#memberRank").append(
-                `<option value="${value.common_value}" ${selected}>${value.common_status}</option>`
-              );
-            });
 
             $("#memberRank").empty();
             $.each(response.empRank, function (key, value) {
@@ -460,7 +451,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
                   member_state: memberStatus,
                 };
                 $.ajax({
-                  url: "/updateMember",
+                  url: "/admin/updateMember",
                   type: "POST",
                   dataType: "json",
                   data: JSON.stringify(data),
@@ -504,7 +495,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
                 member_state: memberStatus,
               };
               $.ajax({
-                url: "/deleteMember",
+                url: "/admin/deleteMember",
                 type: "POST",
                 dataType: "json",
                 data: JSON.stringify(data),

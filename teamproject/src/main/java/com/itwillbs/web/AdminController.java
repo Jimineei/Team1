@@ -19,6 +19,7 @@ import com.itwillbs.domain.MemberVO;
 import com.itwillbs.service.MemberService;
 
 @Controller
+@RequestMapping(value="/admin/*")
 public class AdminController {
 
 	private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
@@ -31,8 +32,8 @@ public class AdminController {
 	@RequestMapping(value = "adminMemberList", method = RequestMethod.GET)
 	public void adminMemberListGET(Model model) {
 		logger.debug("adminMemberListGET");
-
-		List<MemberVO> memberList = mService.memberList();
+		
+		List<MemberVO> memberList = mService.memberList("AllList");
 
 		model.addAttribute("memberList", memberList);
 	}
@@ -73,5 +74,23 @@ public class AdminController {
 		}
 		response.put("message", "삭제");
 		return ResponseEntity.ok(response); 
+	}
+	
+	@RequestMapping(value = "/admin/signReq" , method = RequestMethod.GET)
+	public void memberRequest(Model model) {
+		logger.debug("signReq");
+		
+		List result = mService.memberList("WaitingList");
+		logger.debug("result controller : "+ result.get(0));
+		logger.debug("result controller : "+ result.get(1));
+		logger.debug("result controller : "+ result.get(2));
+
+		
+		model.addAttribute("WaitingList", result.get(0));
+		model.addAttribute("EmpList", result.get(1));
+		model.addAttribute("DeptList", result.get(2));
+		
+		
+		
 	}
 }
