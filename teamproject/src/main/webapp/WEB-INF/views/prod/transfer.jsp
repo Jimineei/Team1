@@ -38,6 +38,12 @@
 		font-size: 18px;
 		line-height: 2;
 	}
+	
+	#prod_image {
+		width: 300px; height: 200px;
+		border: dashed 3px #ccc;
+		visibility: hidden;
+	}
 
 </style>
 
@@ -81,22 +87,47 @@
 								<div class="row">
 									<div class="col-md-12">
 									<form id="transferForm" action="" method="post">
+									
 										<div class="form-group d-flex" style="margin: 0 200px; gap: 100px;">
-											<div style="flex: 1;">
-												<label for="prod_id" class="col-form-label-lg">제품식별코드</label>
+											<div class="form-floating form-floating-custom mb-3" style="flex: 1;">
 												<select class="form-select" id="prod_id" name="prod_id">
 													<option>제품식별코드</option>
-													<!-- 제품식별코드를 고른후 다음 셀렉트버튼 누르면 그 제품식별코드를 받아서 다시 데이터베이스조회 
-													제품식별코드에 해당하는 창고를 받아오고 창고를 고른후 다음 셀렉트 버튼을 누르면 제품식별코드와 창고를 
-													받아서 다시 데이터베이스 조회를 하여 제품식별코드와 창고에 해당하는 제품 수량을 받아온다 -->
 												</select>
+												<label for="prod_id" class="selectFloatingLabel">제품식별코드</label>
 												<input type="hidden" id="prod_reguser" name="prod_reguser" 
 													value="테스터1" placeholder="등록작업자" />
 												<input type="hidden" id="prod_upduser" name="prod_upduser" 
 													value="테스터1" placeholder="수정작업자" />
 											</div>
-											<div style="flex: 1;"></div>
-											<div style="flex: 1;"></div>
+											<div class="form-floating form-floating-custom mb-3" style="flex: 1;">
+												<select class="form-select" id="wh_number" name="wh_number">
+													<option>창고</option>
+												</select>
+												<label for="wh_number" class="selectFloatingLabel">창고</label>
+											</div>
+											<div class="form-floating form-floating-custom mb-3" style="flex: 1;">
+												<select class="form-select" id="prod_qty" name="prod_qty" disabled>
+													<option>수량</option>
+												</select>
+												<label for="prod_qty" class="selectFloatingLabel">수량</label>
+											</div>
+										</div>
+										
+										<div class="form-group d-flex" style="margin: 0 200px; gap: 100px;">
+											 <div style="flex: 1;">
+											 	<img id="prod_image" src="#">
+											 </div>
+											 <div class="form-floating form-floating-custom mb-3" style="flex: 1;">
+												<select class="form-select" id="wh_number2" name="wh_number2">
+													<option>창고</option>
+												</select>
+												<label for="wh_number2" class="selectFloatingLabel">창고</label>
+											</div>
+											<div class="form-floating form-floating-custom mb-1" style="flex: 1;">
+												<input type="number" class="form-control" 
+													id="prod_qty2" name="prod_qty2" placeholder="수량"/>
+												<label for="prod_qty2" class="col-form-label-lg">이동 수량</label>
+											</div>
 										</div>
 										<div style="display: flex; justify-content: center; margin-bottom: 20px; gap: 20px;">
 											<button type="submit" class="btn btn-primary">
@@ -192,6 +223,51 @@
 			}
 		});
 	});
+	
+	$('#wh_number').on('click', function() {
+		if ($(this).find('option').length > 1) {
+			return; // 첫 번째 옵션만 있을 때만 요청
+		}
+	
+		const selectedProdId = $("#prod_id").val();
+		$.ajax({
+			url: '/prod/transferSelect2',
+			type: 'POST',
+			contentType: 'application/json',
+			data: JSON.stringify({ prod_id: selectedProdId }),
+			dataType: 'json',
+			success: function(data) {
+				var select = $('#wh_number');
+				select.empty();
+				select.append('<option>창고 선택</option>');
+				
+				$.each(data, function(index, s) {
+    				select.append('<option value="' + s.wh_number + '">' + s.wh_code + ' - ' + s.wh_name + ' - ' + s.wh_location + '</option>');
+				});
+
+				select.change(function() {
+					var selectedWh = $(this).val(); // 선택된 창고
+
+					$('#prod_qty').empty();
+					$('#prod_qty').append('<option>수량 선택</option>');
+
+					$.each(data, function(index, item) {
+						if (item.wh_number == selectedWh) {
+							var selectedQty = item.prod_qty;
+							$('#prod_qty').append('<option value="' + selectedQty + '">' + selectedQty + '</option>');
+							$('#prod_qty').val(selectedQty);
+							
+							
+						}
+					});
+				});
+			},
+			error: function(xhr, status, error) {
+				console.error("데이터를 가져오는 데 오류가 발생했습니다:", error);
+			}
+		});
+	});
+	
 	// select 요소 클릭 시 데이터 가져오기
 	    	
 	    	

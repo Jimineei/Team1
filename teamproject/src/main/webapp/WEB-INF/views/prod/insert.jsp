@@ -50,7 +50,7 @@
         }
         
         #prodForm label {
-        	font-size: 20px !important;
+        	font-size: 18px !important;
         }
         
         #prodForm i {
@@ -61,6 +61,7 @@
         .btn-warning {
         	color: #fff !important;
         }
+        
         
 </style>
 
@@ -105,15 +106,15 @@
 									<div class="col-md-12">
 									<form id="prodForm" action="" method="post" enctype="multipart/form-data">
 										<div class="form-group d-flex" style="margin: 0 200px; gap: 100px;">
-											<div style="flex: 1;">
-												<label for="prod_name" class="col-form-label-lg">제품명</label>
-												<input type="text" class="form-control input-full"
+											<div class="form-floating form-floating-custom mb-1" style="flex: 1;">
+												<input type="text" class="form-control"
 													id="prod_name" name="prod_name" placeholder="제품명" required="required"/>
+												<label for="prod_name" class="col-form-label-lg">제품명</label>
 											</div>
-											<div style="flex: 1;">
-												<label for="prod_category" class="col-form-label-lg">제품카테고리</label>
+											<div class="form-floating form-floating-custom mb-1" style="flex: 1;">
 												<input type="text" class="form-control input-full"
 													id="prod_category" name="prod_category" placeholder="제품카테고리" required="required"/>
+												<label for="prod_category" class="col-form-label-lg"> 제품카테고리</label>
 											</div>
 												<input type="hidden" id="prod_reguser" name="prod_reguser" 
 													value="테스터1" placeholder="등록작업자" />
@@ -121,21 +122,22 @@
 													value="테스터1" placeholder="수정작업자" />
 										</div>
 										<div class="form-group d-flex" style="margin: 0 200px; gap: 100px;">
-											<div style="flex: 1;">
-												<label for="prod_brand" class="col-form-label-lg">제품브랜드</label>
+											<div class="form-floating form-floating-custom mb-1" style="flex: 1;">
 												<input type="text" class="form-control input-full"
 													id="prod_brand" name="prod_brand" placeholder="제품브랜드" required="required"/>
+												<label for="prod_brand" class="col-form-label-lg"> 제품브랜드</label>
 											</div>
-											<div style="flex: 1;">
-												<label for="company_code" class="col-form-label-lg">입고처</label>
+											<div class="form-floating form-floating-custom mb-1" style="flex: 1;">
 												<input type="text" class="form-control input-full"
 													id="company_code" name="company_code" placeholder="입고처" required="required" />
+												<label for="company_code" class="col-form-label-lg"> 입고처</label>
 											</div>
 										</div>
 										<div class="form-group d-flex" style="margin: 0 200px; gap: 100px;">
-											<div style="flex: 1;">
-												<label for="prod_remarks" class="col-form-label-lg">비고</label>
-												<textarea id="prod_remarks" name="prod_remarks" rows="4" cols="30" class="form-control"></textarea>
+											<div class="input-group" style="flex: 1;">
+											<span class="input-group-text" style="font-size: 18px;">비고</span>
+												<textarea id="prod_remarks" name="prod_remarks" 
+												rows="4" cols="30" class="form-control"></textarea>
 											</div>
 											<div style="flex: 1;">
 												<label for="uploadfile" class="col-form-label-lg">제품이미지</label>
@@ -311,7 +313,7 @@
 	            swal({
 	                title: "입력값을 초기화하시겠습니까?",
 	                text: "입력값이 모두 지워집니다!",
-	                type: "warning",
+	                icon: "warning",
 	                buttons: {
 	                    confirm: {
 	                        text: "네, 지우겠습니다.",
@@ -334,7 +336,7 @@
 	                    swal({
 	                        title: "초기화되었습니다.",
 	                        text: "모든 입력값이 초기화되었습니다.",
-	                        type: "success",
+	                        icon: "success",
 	                        buttons: {
 	                            confirm: {
 	                                className: "btn btn-primary",

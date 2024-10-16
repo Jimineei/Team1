@@ -106,6 +106,13 @@ public class ProdServiceImpl implements ProdService {
 		logger.debug("( •̀ ω •́ )✧ Service : transferSelect() 실행 ");
 		return pdao.transferSelect();
 	}
+
+	// 재고이동
+	@Override
+	public List<ProdVO> transferSelect2(ProdVO vo) {
+		logger.debug("( •̀ ω •́ )✧ Service : transferSelect2() 실행 ");
+		return pdao.transferSelect2(vo);
+	}
 	
 	
 	
