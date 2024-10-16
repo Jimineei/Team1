@@ -127,6 +127,7 @@ public class ProdController {
 
 	
 	// 재고 이동(get)
+	// http://localhost:8088/prod/transfer
 	@GetMapping(value = "/transfer")
 	public void transferProdGet(ProdVO vo, HttpServletRequest req) {
 		logger.debug("( •̀ ω •́ )✧ ProdController : transferProdGet(ProdVO vo, HttpServletRequest req) 실행 ");
@@ -137,11 +138,22 @@ public class ProdController {
 	@PostMapping(value = "/transferSelect")
 	@ResponseBody
 	public ResponseEntity<List<ProdVO>> transferSelectPost() {
-	    logger.debug("( •̀ ω •́ )✧ ProdController : findProdPost() 실행 ");
+	    logger.debug("( •̀ ω •́ )✧ ProdController : transferSelectPost() 실행 ");
 	    List<ProdVO> transferListVO = pService.transferSelect();
-	    logger.debug("( •̀ ω •́ )✧ ProdController : stockListVO : " + transferListVO);
+	    logger.debug("( •̀ ω •́ )✧ ProdController : transferListVO : " + transferListVO);
 	    
 	    return ResponseEntity.ok(transferListVO);
+	}
+	
+	// 재고 이동(post)
+	@PostMapping(value = "/transferSelect2")
+	@ResponseBody
+	public ResponseEntity<List<ProdVO>> transferSelectPost2(@RequestBody ProdVO vo) {
+		logger.debug("( •̀ ω •́ )✧ ProdController : transferSelectPost2() 실행 ");
+		List<ProdVO> transferList2VO = pService.transferSelect2(vo);
+		logger.debug("( •̀ ω •́ )✧ ProdController : transferList2VO : " + transferList2VO);
+		
+		return ResponseEntity.ok(transferList2VO);
 	}
 	
 	

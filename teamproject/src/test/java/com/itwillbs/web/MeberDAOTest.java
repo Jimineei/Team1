@@ -128,17 +128,17 @@ public class MeberDAOTest {
 		System.out.println(" TEST : 회원정보 삭제 끝 ");
 	}
 	
-	@Test
-	public void 회원목록_리스트() {
-		System.out.println(" TEST : 회원목록 조회 시작 ");
-		
-		List<MemberVO> memberList = mdao.getMemberList();
-		
-		for (MemberVO memberVO : memberList) {
-			System.out.println("memberVO : "+ memberVO);
-		}
-		
-		System.out.println(" TEST : 회원목록 조회 시작 ");
-	}
+//	@Test
+//	public void 회원목록_리스트() {
+//		System.out.println(" TEST : 회원목록 조회 시작 ");
+//		
+//		List<MemberVO> memberList = mdao.getMemberList();
+//		
+//		for (MemberVO memberVO : memberList) {
+//			System.out.println("memberVO : "+ memberVO);
+//		}
+//		
+//		System.out.println(" TEST : 회원목록 조회 시작 ");
+//	}
 	
 }

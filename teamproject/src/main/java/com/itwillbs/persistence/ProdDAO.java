@@ -36,6 +36,7 @@ public interface ProdDAO {
 	
 	// 재고이동
 	public List<ProdVO> transferSelect();
+	public List<ProdVO> transferSelect2(ProdVO vo);
 	
 
 	

@@ -90,12 +90,6 @@ public class MemberServiceImpl implements MemberService{
 		
 	}
 	
-	@Override
-	public List<MemberVO> memberList() {
-		logger.debug("memberList() 실행 ");	
-		
-		return mdao.getMemberList();
-	}
 	
 	@Override
 	public MemberVO memberInfoTel(String tel) {
@@ -108,5 +102,13 @@ public class MemberServiceImpl implements MemberService{
 		logger.debug("(●'◡'●) memberInfoTel(String member_id) 실행 " + member_id);
 		return mdao.getMemberDetails(member_id);
 	}
+	// admin 전용 특정 사용자 조회
+	@Override
+	public List<MemberVO> memberList(String action) {
+		logger.debug("memberList() 실행 ");	
+		
+		return mdao.getMemberList(action);
+	}
+	
 	
 }

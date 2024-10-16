@@ -103,6 +103,13 @@ public class ProdDAOImpl implements ProdDAO {
 		return sqlSession.selectList(NAMESPACE + ".transferSelect");
 	}
 
+	// 재고이동
+	@Override
+	public List<ProdVO> transferSelect2(ProdVO vo) {
+		logger.debug("( •̀ ω •́ )✧ DAO : transferSelect2(ProdVO vo) 실행");
+		return sqlSession.selectList(NAMESPACE + ".transferSelect2", vo);
+	}
+
 
 	
 	
