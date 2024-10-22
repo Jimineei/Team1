@@ -59,7 +59,7 @@ public class CompanyVO {
     }
 
     public String getCompany_tel() {
-        return company_tel;
+        return company_tel; 
     }
 
     public void setCompany_tel(String company_tel) {
